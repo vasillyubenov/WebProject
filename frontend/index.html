@@ -2,12 +2,21 @@
 <html>
 <head>
     <title>Motion Graphics Generator</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
-    <div id="app">
-        <!-- App goes here -->
-    </div>
+    <h2>Star Wars Cinematic Project</h2>
+
+    <form action="/your_server_endpoint" method="post" enctype="multipart/form-data">
+      <label for="htmlFile">Referat File:</label><br>
+      <input type="file" id="htmlFile" name="htmlFile" accept=".html"><br><br>
+      <label for="audioFile">Audio File:</label><br>
+      <input type="file" id="audioFile" name="audioFile" accept=".mp3,.wav,.ogg"><br><br>
+      <label for="configFile">JSON Config File:</label><br>
+      <input type="file" id="configFile" name="configFile" accept=".json"><br><br>
+      <input type="submit" value="Upload">
+    </form>
+
     <script src="js/main.js"></script>
     <script src="js/configEditor.js"></script>
     <script src="js/animation.js"></script>
