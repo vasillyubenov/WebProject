@@ -7,6 +7,9 @@ The platform also includes a visual configuration editor, allowing the users to 
 ## Prerequisites
 - PHP 7.4 or above
 - A modern web browser
+- Have to install the following php packages:
+- 1. php-mbstring
+- 1. php-dom
 
 ## Project Structure
 The project is structured as follows:
