@@ -4,6 +4,7 @@ use Html2Text\Html2Text;
 
 $time = $_GET["time"];
 $target_dir = "uploads/";
+$audioPath = "../backend/uploads/audioFile.mp3";
 $target_file = $target_dir . $time . basename("referat.html");
 ?>
 
@@ -29,15 +30,16 @@ $target_file = $target_dir . $time . basename("referat.html");
 
       <?php
       $chunkSize = 5;
-      $fileContent = file_get_contents($target_dir . 'referat.html');
+      $audioFile = $_GET['audioFile'] ?? '';
+      $fileContent = file_get_contents($target_dir . 'htmlFile.html');
       $options = array('ignore_comments' => true);
       $html2text = new Html2Text($fileContent, $options);
       $textContent = $html2text->getText();
       $words = str_word_count($textContent, 1); // get words as an array
       $chunks = array_chunk($words, $chunkSize);
-
       echo '<p>' . $textContent . '</p>';
       echo "<script src='../frontend/js/animation.js'></script>";
+      echo "<script>StartAnimation('" . htmlspecialchars($audioFile) . "');</script>";     
       ?>
     </div>
   </section>

@@ -3,6 +3,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $target_dir = "uploads/";
 $curent_datetime = date("Y:m:d_H:i:s");
+$target_file = "";
 
 if (isset($_FILES['htmlFile'])) {
     $file_form_name = "htmlFile";
@@ -14,7 +15,7 @@ if (isset($_FILES['audioFile'])) {
     upload_file($file_form_name, $target_dir, $curent_datetime);
 }
 
-header("Location: visualize.php?time=" . $curent_datetime);
+header("Location: visualize.php?time=" . $curent_datetime . "&audioFile=" . urlencode($target_file));
 exit();
 
 function upload_file($file_form_name, $target_dir, $curent_datetime)

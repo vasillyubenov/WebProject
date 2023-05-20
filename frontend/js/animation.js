@@ -6,11 +6,12 @@ class Animation {
     // methods to handle animations
 }
 
-(() => {
+function StartAnimation(audioFilePath, playTime) {
     var isPaused = true;
     var delay = 0;
     const delayChangeStep = 1;
     ToggleAnimation();
+    PlayMusic(audioFilePath, playTime);
 
     document.addEventListener('keydown', function(event) {
         if (event.code === 'Space') {
@@ -48,5 +49,17 @@ class Animation {
         delay -= delayChangeStep;
         scrollText.style.animationDelay = `${delay}s`;
     }
-})();
+
+    function PlayMusic(filename, playTime) {
+        console.log(filename);
+        const defaultAudioPath = "../assets/audio/Star_Wars_Main_Theme.mp3";
+        
+        audio = new Audio(filename !== "" ? filename : defaultAudioPath);
+        audio.play();
+
+        if (playTime) {
+            audio.currentTime = playTime;
+        }
+    }
+};
 
