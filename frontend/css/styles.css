@@ -8,6 +8,19 @@ body {
     height: 100%;
     overflow: hidden;
     font-family: 'Pathway Gothic One', sans-serif;
+    background-color: #3e3e3e;
+}
+
+#logo {
+    width: 50px;
+    height: 64px;
+}
+
+.header-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
 }
 
 .fade {
