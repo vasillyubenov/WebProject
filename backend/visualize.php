@@ -37,9 +37,7 @@ $target_file = $target_dir . $time . basename("referat.html");
       $chunks = array_chunk($words, $chunkSize);
 
       echo '<p>' . $textContent . '</p>';
-      // foreach ($chunks as $chunk) {
-      //     echo '<p>'.implode(' ', $chunk).'</p>'; // implode array to string
-      // }
+      echo "<script src='../frontend/js/animation.js'></script>";
       ?>
     </div>
   </section>
