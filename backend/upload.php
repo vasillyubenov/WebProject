@@ -45,12 +45,14 @@ if ($uploadOk == 0) {
     </div>
 
     <?php
-    $chunkSize = 5;
+    //TODO Add how much words per line to have
+    // $chunkSize = 5;
     $fileContent = file_get_contents($target_dir . 'referat.html');
-    $html2text = new Html2Text($fileContent);
+    $options = array('ignore_comments' => true);
+    $html2text = new Html2Text($fileContent, $options);
     $textContent = $html2text->getText();
-    $words = str_word_count($textContent, 1); // get words as an array
-    $chunks = array_chunk($words, $chunkSize);
+    // $words = str_word_count($textContent, 1); // get words as an array
+    // $chunks = array_chunk($words, $chunkSize);
 
     echo '<p>'.$textContent.'</p>';
     // foreach ($chunks as $chunk) {
