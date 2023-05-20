@@ -1,11 +1,9 @@
-@font-face 
-{
+@font-face {
     font-family: 'Pathway Gothic One';
     src: url('../assets/fonts/Pathway_Gothic_One/PathwayGothicOne-Regular.ttf') format('ttf')
 }
 
-body 
-{
+body {
     width: 100%;
     height: 100%;
     /* background: #000; */
@@ -13,8 +11,7 @@ body
     font-family: 'Pathway Gothic One', sans-serif;
 }
 
-.fade 
-{
+.fade {
     position: relative;
     width: 100%;
     min-height: 60vh;
@@ -23,8 +20,76 @@ body
     z-index: 1;
 }
 
-.star-wars
- {
+.config-form {
+    width: 60%;
+    margin: 100px auto;
+    padding: 30px;
+    background-color: #2e2e2e;
+    border: 1px solid #4a4a4a;
+    border-radius: 8px;
+}
+
+.config-form label {
+    display: block;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.config-form input[type="file"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 20px;
+    color: #fff;
+    background-color: #3e3e3e;
+    border: none;
+    border-radius: 4px;
+}
+
+h1,
+h2,
+h3 {
+    text-align: center;
+}
+
+.star-wars-title {
+    color: #feda4a;
+    font-family: 'Pathway Gothic One', sans-serif;
+    font-size: 24px;
+}
+
+.config-form input[type="submit"] {
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.config-form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.center-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#gray-background-loader {
+    display: none;
+    background-color: #4a4a4a7c;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+}
+
+.star-wars {
     display: flex;
     justify-content: center;
     position: relative;
@@ -39,28 +104,24 @@ body
     text-align: justify;
 }
 
-.crawl 
-{
+.crawl {
     position: relative;
     top: 99999px;
     transform-origin: 50% 100%;
     animation: crawl 60s linear;
 }
 
-.crawl>.title 
-{
+.crawl>.title {
     font-size: 90%;
     text-align: center;
 }
 
-.crawl>.title h1 
-{
+.crawl>.title h1 {
     margin: 0 0 100px;
     text-transform: uppercase;
 }
 
-@keyframes crawl 
-{
+@keyframes crawl {
     0% {
         top: -100px;
         transform: rotateX(20deg) translateZ(0);
@@ -69,5 +130,26 @@ body
     100% {
         top: -6000px;
         transform: rotateX(25deg) translateZ(-2500px);
+    }
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    /* Light grey */
+    border-top: 16px solid #3498db;
+    /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
     }
 }
