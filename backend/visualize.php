@@ -19,13 +19,13 @@ $target_file = $target_dir . $time . basename("referat.html");
 </head>
 
 <body>
-  <button class="star-wars-button" onclick="generateConfig('<?php echo $time;?>')">Generate Config</button>
-
+  <button class="star-wars-button" onclick="GenerateConfig('<?php echo $time; ?>')">Generate Config</button>
   <script>
-    function generateConfig(D_time) {
-    
+    function GenerateConfig(D_time) {
+
       var config = {
         time: D_time,
+        text_delay: scrollText.style.animationDelay,
       };
 
       var configJSON = JSON.stringify(config, null, 2);
@@ -43,6 +43,7 @@ $target_file = $target_dir . $time . basename("referat.html");
       URL.revokeObjectURL(url);
     }
   </script>
+
   <div class="fade"></div>
   <section class="star-wars">
     <div class="crawl">
