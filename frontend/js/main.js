@@ -9,7 +9,7 @@
 
     formSubmiter.addEventListener('click', function(event) {
         // Prevent the default behavior
-        event.preventDefault();
+        // event.preventDefault();
         if (referatInput.files.length < 1){
             alert("Some of the input fields have unselected files");
             ShowLoader();
