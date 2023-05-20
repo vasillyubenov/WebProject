@@ -35,7 +35,6 @@ The project is structured as follows:
 |--📄.htaccess
 |--📄requirements.txt
 
-
 ## Getting Started
 1. Clone this repository or download and unzip the project folder.
 2. Navigate into the `project_root` directory.
