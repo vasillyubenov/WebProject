@@ -19,8 +19,31 @@ $target_file = $target_dir . $time . basename("referat.html");
 </head>
 
 <body>
-  <div class="fade"></div>
+  <button class="star-wars-button" onclick="generateConfig('<?php echo $time;?>')">Generate Config</button>
 
+  <script>
+    function generateConfig(D_time) {
+    
+      var config = {
+        time: D_time,
+      };
+
+      var configJSON = JSON.stringify(config, null, 2);
+
+      var blob = new Blob([configJSON], { type: "application/json" });
+
+      var url = URL.createObjectURL(blob);
+
+      var link = document.createElement("a");
+      link.href = url;
+      link.download = "config.json";
+
+      link.click();
+
+      URL.revokeObjectURL(url);
+    }
+  </script>
+  <div class="fade"></div>
   <section class="star-wars">
     <div class="crawl">
       <div class="title">
