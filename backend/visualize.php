@@ -3,10 +3,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Html2Text\Html2Text;
 
 $time = $_GET["time"];
-$target_dir = "uploads/";
 $audio_format = $_GET["audioFormat"];
+$target_dir = "uploads/";
 $audio_file = $target_dir . $time . basename("audioFile") . "." . $audio_format;
-$html_file = $target_dir . $time . basename("htmlFile");
+$html_file = $target_dir . $time . basename("htmlFile").".html";
 ?>
 
 <html lang="en">
@@ -37,7 +37,7 @@ $html_file = $target_dir . $time . basename("htmlFile");
     transition: all 0.3s ease;">
 
 
-    <audio id="audioPlayer" src="../frontend/assets/audio/Star_Wars_Main_Theme.mp3" style="display: none"></audio>
+    <audio id="audioPlayer" src=<?php echo $audio_file?> style="display: none"></audio>
 
   </div>
 
@@ -53,14 +53,13 @@ $html_file = $target_dir . $time . basename("htmlFile");
       <?php
       $chunkSize = 5;
 
-      $audio = file_get_contents($audio_file);
       $html = file_get_contents($html_file);
 
       // $options = array('ignore_comments' => true);
       // $html2text = new Html2Text($html, $options);
       // $textContent = $html2text->getText();
-      
       // $textContent = nl2br($textContent);
+
       echo '<p style="text-aling:center;">' . $html . '</p>';
       echo "<script>StartAnimation();</script>";
       ?>
