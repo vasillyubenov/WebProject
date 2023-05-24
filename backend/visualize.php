@@ -42,6 +42,8 @@ $html_file = $target_dir . $time . basename("htmlFile");
   </div>
 
   <div class="fade"></div>
+  <div id="play" class="action-button"></div>
+  <div id="pause" class="action-button"></div>
   <section class="star-wars">
     <div id="crawl">
       <div class="title">

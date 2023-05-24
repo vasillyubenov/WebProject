@@ -1,5 +1,12 @@
 var textFastingStep = 4;
 var playbackStep = 0.3;
+const playButton = window.document.getElementById("play");
+const pauseButton = window.document.getElementById("pause");
+
+play.addEventListener('click', function(event) {
+    StartAnimation();
+    playButton.style.display = "none";
+});
 
 function StartAnimation() {
   var isPaused = false;
@@ -22,6 +29,9 @@ function StartAnimation() {
 
   function ToggleAnimation() {
     isPaused = !isPaused;
+
+    pauseButton.style.display = isPaused ? "block" : "none";
+
     if (!isPaused) {
       StartAnimationLoop();
       PlayAudio();
