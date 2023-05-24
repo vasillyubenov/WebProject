@@ -6,12 +6,43 @@ class Animation {
     // methods to handle animations
 }
 
+window.onload = function() {
+    // Get the element and the paragraph
+    var element = document.querySelector('.crawl');
+    var paragraph = document.querySelector('.crawl > p'); // assuming your text is in a <p> tag within the .crawl div
+
+    // Determine the height of the text
+    var textHeight = paragraph.offsetHeight;
+
+    // Calculate the end top position and animation duration based on the text height
+    // Here, we're assuming that each 100px of text takes 1 second to scroll past
+    var endTopPosition = -textHeight;
+    var animationDuration = textHeight / 100 * 1000; // convert from px/100 to milliseconds
+
+    // Calculate the end translateZ position based on the text height
+    // Here, we're assuming that each 100px of text moves 50px closer in the z direction
+    var endTranslateZ = -textHeight / 2;
+
+    var animation = element.animate([
+    { // Start state
+        top: '0px',
+        transform: 'rotateX(20deg)  translateZ(0)'
+    },
+    { // End state
+        top: `${endTopPosition}px`,
+        transform: `rotateX(25deg) translateZ(${endTranslateZ}px)`
+    }
+    ], {
+        duration: animationDuration,
+    });
+}
+
 function StartAnimation(audioFilePath, playTime) {
     var isPaused = true;
     var delay = 0;
     const delayChangeStep = 1;
     ToggleAnimation();
-    PlayMusic(audioFilePath, playTime);
+    // PlayMusic(audioFilePath, playTime);
 
     document.addEventListener('keydown', function(event) {
         if (event.code === 'Space') {
