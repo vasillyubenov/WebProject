@@ -36,6 +36,10 @@ function StartAnimation() {
     isPaused = !isPaused;
 
     pauseButton.style.display = isPaused ? "block" : "none";
+    
+    if (!isPaused && playButton.style.display !== "none") {
+        playButton.style.display = "none"
+    }
 
     if (!isPaused) {
       StartAnimationLoop();
