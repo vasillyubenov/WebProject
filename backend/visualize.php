@@ -4,7 +4,8 @@ use Html2Text\Html2Text;
 
 $time = $_GET["time"];
 $target_dir = "uploads/";
-$audio_file = $target_dir . $time . basename("audioFile");
+$audio_format = $_GET["audioFormat"];
+$audio_file = $target_dir . $time . basename("audioFile") . "." . $audio_format;
 $html_file = $target_dir . $time . basename("htmlFile");
 ?>
 
@@ -20,30 +21,8 @@ $html_file = $target_dir . $time . basename("htmlFile");
 </head>
 
 <body>
-  <button class="star-wars-button" onclick="GenerateConfig('<?php echo $time; ?>')">Generate Config</button>
-  <script>
-    function GenerateConfig(D_time) {
-
-      var config = {
-        time: D_time,
-        text_delay: scrollText.style.animationDelay,
-      };
-
-      var configJSON = JSON.stringify(config, null, 2);
-
-      var blob = new Blob([configJSON], { type: "application/json" });
-
-      var url = URL.createObjectURL(blob);
-
-      var link = document.createElement("a");
-      link.href = url;
-      link.download = "config.json";
-
-      link.click();
-
-      URL.revokeObjectURL(url);
-    }
-  </script>
+  <button class="star-wars-button" onclick="GenerateConfig('<?php echo $time; ?>,<?php echo $audio_format ?>')">Generate
+    Config</button>
 
   <div style="position: absolute;
     z-index: 2;
@@ -75,22 +54,13 @@ $html_file = $target_dir . $time . basename("htmlFile");
       $audio = file_get_contents($audio_file);
       $html = file_get_contents($html_file);
 
-      $options = array('ignore_comments' => true);
-      $html2text = new Html2Text($html, $options);
-      $textContent = $html2text->getText();
-
-      $textContent = str_replace('*', "\n", $textContent);
-      $textContent = nl2br($textContent);
-
-      $words = str_word_count($textContent, 1); // get words as an array
-      $chunks = array_chunk($words, $chunkSize);
-      echo '<p>' . $textContent . '</p>';
+      // $options = array('ignore_comments' => true);
+      // $html2text = new Html2Text($html, $options);
+      // $textContent = $html2text->getText();
+      
+      // $textContent = nl2br($textContent);
+      echo '<p style="text-aling:center;">' . $html . '</p>';
       echo "<script>StartAnimation();</script>";
-      // echo "<script> 
-      // document.getElementById('playButton').addEventListener('click', function() {
-      //                 StartAnimation();
-      //                      });
-      //                      </script>";
       ?>
   </section>
 

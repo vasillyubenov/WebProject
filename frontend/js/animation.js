@@ -1,3 +1,6 @@
+var textFastingStep = 4;
+var playbackStep = 0.3;
+
 function StartAnimation() {
   var isPaused = false;
   let topValue = -100;
@@ -8,7 +11,6 @@ function StartAnimation() {
   const updateTime = 10;
   let fastForwardIntervalId;
   let fastBackwardIntervalId;
-  let fastingStep = 4;
 
   ToggleAnimation();
 
@@ -36,8 +38,8 @@ function StartAnimation() {
       if (event.key === "ArrowLeft" && fastBackwardIntervalId == null) {
         fastBackwardIntervalId = setInterval(FastBackward, 100);
         DecreasePlaybackSpeed();
-    }
-});
+      }
+    });
 
     window.addEventListener("keyup", function (event) {
       if (event.key === "ArrowLeft" && fastBackwardIntervalId != null) {
@@ -45,33 +47,33 @@ function StartAnimation() {
         fastBackwardIntervalId = null;
         incrementValue = defaultIncrementValue;
         IncreasePlaybackSpeed();
-    }
+      }
     });
-    
+
     //Activating fast forward
     window.addEventListener("keydown", function (event) {
-        if (event.key === "ArrowRight" && fastForwardIntervalId == null) {
+      if (event.key === "ArrowRight" && fastForwardIntervalId == null) {
         fastForwardIntervalId = setInterval(FastForward, 100);
         IncreasePlaybackSpeed();
       }
     });
 
     window.addEventListener("keyup", function (event) {
-        if (event.key === "ArrowRight" && fastForwardIntervalId != null) {
+      if (event.key === "ArrowRight" && fastForwardIntervalId != null) {
         clearInterval(fastForwardIntervalId);
         fastForwardIntervalId = null;
         incrementValue = defaultIncrementValue;
         DecreasePlaybackSpeed();
-    }
+      }
     });
   })();
 
   function FastForward() {
-    incrementValue = fastingStep;
+    incrementValue = textFastingStep;
   }
 
   function FastBackward() {
-    incrementValue = -fastingStep;
+    incrementValue = -textFastingStep;
   }
 
   function StartAnimationLoop() {
@@ -102,13 +104,36 @@ function StartAnimation() {
     audio.pause();
   }
 
-  function IncreasePlaybackSpeed() { 
+  function IncreasePlaybackSpeed() {
     var audio = document.getElementById("audioPlayer");
-    audio.playbackRate += 0.3;
+    audio.playbackRate += playbackStep;
   }
 
   function DecreasePlaybackSpeed() {
     var audio = document.getElementById("audioPlayer");
-    audio.playbackRate -= 0.3;
+    audio.playbackRate -= playbackStep;
   }
+}
+
+function GenerateConfig(_time, _audio_format) {
+  var config = {
+    time: _time,
+    audio_format: _audio_format,
+    text_step: textFastingStep,
+    payback_step: playbackStep,
+  };
+
+  var configJSON = JSON.stringify(config, null, 2);
+
+  var blob = new Blob([configJSON], { type: "application/json" });
+
+  var url = URL.createObjectURL(blob);
+
+  var link = document.createElement("a");
+  link.href = url;
+  link.download = "config.json";
+
+  link.click();
+
+  URL.revokeObjectURL(url);
 }
