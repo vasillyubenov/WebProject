@@ -3,19 +3,19 @@ var playbackStep = 0.3;
 let playButton;
 let pauseButton;
 
-document.addEventListener('DOMContentLoaded',() => {
-    playButton = document.getElementById("play");
-    pauseButton = document.getElementById("pause");
-    
-    playButton.addEventListener('click', function(event) {
-        StartAnimation();
-        playButton.style.display = "none";
-    });
-    
-    pauseButton.addEventListener('click', function(event) {
-        StartAnimation();
-        playButton.style.display = "none";
-    });
+document.addEventListener("DOMContentLoaded", () => {
+  playButton = document.getElementById("play");
+  pauseButton = document.getElementById("pause");
+
+  playButton.addEventListener("click", function (event) {
+    StartAnimation();
+    playButton.style.display = "none";
+  });
+
+  pauseButton.addEventListener("click", function (event) {
+    StartAnimation();
+    playButton.style.display = "none";
+  });
 });
 
 function StartAnimation(text_step, playback_step) {
@@ -44,11 +44,11 @@ function StartAnimation(text_step, playback_step) {
     isPaused = !isPaused;
 
     if (pauseButton) {
-        pauseButton.style.display = isPaused ? "block" : "none";
+      pauseButton.style.display = isPaused ? "block" : "none";
     }
-    
+
     if (!isPaused && playButton.style.display !== "none") {
-        playButton.style.display = "none"
+      playButton.style.display = "none";
     }
 
     if (!isPaused) {
@@ -75,7 +75,7 @@ function StartAnimation(text_step, playback_step) {
         clearInterval(fastBackwardIntervalId);
         fastBackwardIntervalId = null;
         incrementValue = defaultIncrementValue;
-        IncreasePlaybackSpeed();
+        ClearUgabuga();
       }
     });
 
@@ -92,7 +92,7 @@ function StartAnimation(text_step, playback_step) {
         clearInterval(fastForwardIntervalId);
         fastForwardIntervalId = null;
         incrementValue = defaultIncrementValue;
-        DecreasePlaybackSpeed();
+        ClearUgabuga();
       }
     });
   })();
@@ -140,19 +140,28 @@ function StartAnimation(text_step, playback_step) {
 
   function DecreasePlaybackSpeed() {
     var audio = document.getElementById("audioPlayer");
-    audio.playbackRate -= playbackStep;
+    if (audio.playbackRate - playback_step > 0) {
+      audio.playbackRate -= playbackStep;
+    } else {
+      audio.playbackRate = 1;
+    }
+  }
+
+  function ClearUgabuga() {
+    var audio = document.getElementById("audioPlayer");
+    audio.playbackRate = 1;
   }
 }
 
 function GenerateConfig(_time, _audio_format) {
-    console.log('bismilq')
-    var config = {
-        time: _time,
-        audio_format: _audio_format,
-        text_step: textFastingStep,
-        playback_step: playbackStep,
-    };
-    console.log('bismismilq')
+  console.log("bismilq");
+  var config = {
+    time: _time,
+    audio_format: _audio_format,
+    text_step: textFastingStep,
+    playback_step: playbackStep,
+  };
+  console.log("bismismilq");
 
   var configJSON = JSON.stringify(config, null, 2);
 
