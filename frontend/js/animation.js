@@ -1,23 +1,3 @@
-function PlayAudio() {
-  var audio = document.getElementById("audioPlayer");
-  audio.play();
-}
-
-function PauseAudio() {
-  var audio = document.getElementById("audioPlayer");
-  audio.pause();
-}
-
-function SeekForward() {
-  var audio = document.getElementById("audioPlayer");
-  audio.currentTime += 5;
-}
-
-function SeekBackwards() {
-  var audio = document.getElementById("audioPlayer");
-  audio.currentTime -= 5;
-}
-
 function StartAnimation() {
   var isPaused = false;
   let topValue = -100;
@@ -55,30 +35,34 @@ function StartAnimation() {
     window.addEventListener("keydown", function (event) {
       if (event.key === "ArrowLeft" && fastBackwardIntervalId == null) {
         fastBackwardIntervalId = setInterval(FastBackward, 100);
-      }
-    });
+        DecreasePlaybackSpeed();
+    }
+});
 
     window.addEventListener("keyup", function (event) {
       if (event.key === "ArrowLeft" && fastBackwardIntervalId != null) {
         clearInterval(fastBackwardIntervalId);
         fastBackwardIntervalId = null;
         incrementValue = defaultIncrementValue;
-      }
+        IncreasePlaybackSpeed();
+    }
     });
-
+    
     //Activating fast forward
     window.addEventListener("keydown", function (event) {
-      if (event.key === "ArrowRight" && fastForwardIntervalId == null) {
+        if (event.key === "ArrowRight" && fastForwardIntervalId == null) {
         fastForwardIntervalId = setInterval(FastForward, 100);
+        IncreasePlaybackSpeed();
       }
     });
 
     window.addEventListener("keyup", function (event) {
-      if (event.key === "ArrowRight" && fastForwardIntervalId != null) {
+        if (event.key === "ArrowRight" && fastForwardIntervalId != null) {
         clearInterval(fastForwardIntervalId);
         fastForwardIntervalId = null;
         incrementValue = defaultIncrementValue;
-      }
+        DecreasePlaybackSpeed();
+    }
     });
   })();
 
@@ -106,5 +90,25 @@ function StartAnimation() {
     if (crawlAnimationInterval) {
       clearInterval(crawlAnimationInterval);
     }
+  }
+
+  function PlayAudio() {
+    var audio = document.getElementById("audioPlayer");
+    audio.play();
+  }
+
+  function PauseAudio() {
+    var audio = document.getElementById("audioPlayer");
+    audio.pause();
+  }
+
+  function IncreasePlaybackSpeed() { 
+    var audio = document.getElementById("audioPlayer");
+    audio.playbackRate += 0.3;
+  }
+
+  function DecreasePlaybackSpeed() {
+    var audio = document.getElementById("audioPlayer");
+    audio.playbackRate -= 0.3;
   }
 }
