@@ -1,16 +1,19 @@
 var textFastingStep = 4;
 var playbackStep = 0.3;
-const playButton = window.document.getElementById("play");
-const pauseButton = window.document.getElementById("pause");
 
-playButton.addEventListener('click', function(event) {
-    StartAnimation();
-    playButton.style.display = "none";
-});
-
-pauseButton.addEventListener('click', function(event) {
-    StartAnimation();
-    playButton.style.display = "none";
+document.addEventListener('DOMContentLoaded',() => {
+    const playButton = document.getElementById("play");
+    const pauseButton = document.getElementById("pause");
+    
+    playButton.addEventListener('click', function(event) {
+        StartAnimation();
+        playButton.style.display = "none";
+    });
+    
+    pauseButton.addEventListener('click', function(event) {
+        StartAnimation();
+        playButton.style.display = "none";
+    });
 });
 
 function StartAnimation() {
