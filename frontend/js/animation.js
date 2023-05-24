@@ -3,7 +3,12 @@ var playbackStep = 0.3;
 const playButton = window.document.getElementById("play");
 const pauseButton = window.document.getElementById("pause");
 
-play.addEventListener('click', function(event) {
+playButton.addEventListener('click', function(event) {
+    StartAnimation();
+    playButton.style.display = "none";
+});
+
+pauseButton.addEventListener('click', function(event) {
     StartAnimation();
     playButton.style.display = "none";
 });
