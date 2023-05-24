@@ -6,41 +6,18 @@ class Animation {
     // methods to handle animations
 }
 
-window.onload = function() {
-    // Get the element and the paragraph
-    var element = document.querySelector('.crawl');
-    var paragraph = document.querySelector('.crawl > p'); // assuming your text is in a <p> tag within the .crawl div
-
-    // Determine the height of the text
-    var textHeight = paragraph.offsetHeight;
-
-    // Calculate the end top position and animation duration based on the text height
-    // Here, we're assuming that each 100px of text takes 1 second to scroll past
-    var endTopPosition = -textHeight;
-    var animationDuration = textHeight / 100 * 1000; // convert from px/100 to milliseconds
-
-    // Calculate the end translateZ position based on the text height
-    // Here, we're assuming that each 100px of text moves 50px closer in the z direction
-    var endTranslateZ = -textHeight / 2;
-
-    var animation = element.animate([
-    { // Start state
-        top: '0px',
-        transform: 'rotateX(20deg)  translateZ(0)'
-    },
-    { // End state
-        top: `${endTopPosition}px`,
-        transform: `rotateX(25deg) translateZ(${endTranslateZ}px)`
-    }
-    ], {
-        duration: animationDuration,
-    });
-}
-
 function StartAnimation(audioFilePath, playTime) {
     var isPaused = true;
-    var delay = 0;
-    const delayChangeStep = 1;
+    let topValue = -100;
+    let translateZValue = 0;
+    let incrementValue = 1;
+    const defaultIncrementValue = 1;
+    let crawlAnimationInterval;
+    const updateTime = 10;
+    let fastForwardIntervalId;
+    let fastBackwardIntervalId;
+    let fastingStep = 4;
+
     ToggleAnimation();
     // PlayMusic(audioFilePath, playTime);
 
@@ -50,35 +27,54 @@ function StartAnimation(audioFilePath, playTime) {
         }
     });
 
-    document.addEventListener('keyup', function(event) {
-        if (event.code === 'ArrowRight') {
-            // Reset the speed of the animation back to its original duration
-            DecreaseDelay();
-        }
-    });
-
-    document.addEventListener('keyup', function(event) {
-        if (event.code === 'ArrowLeft') {
-            // Reset the speed of the animation back to its original duration
-            IncreaseDelay();
-        }
-    });
-
     function ToggleAnimation() {
         isPaused = !isPaused;
-        document.querySelector('.crawl').style.animationPlayState = isPaused ? 'paused' : 'running';
+        if (!isPaused) {
+            StartAnimationLoop();
+            return;
+        }
+
+        PauseAnimationLoop();
     }
 
-    function IncreaseDelay() {
-        var scrollText = document.querySelector('.crawl');
-        delay += delayChangeStep;
-        scrollText.style.animationDelay = `${delay}s`;
+    (function ActivateControls() {
+        //Activating fast backward
+        window.addEventListener('keydown', function(event) {
+            if (event.key === "ArrowLeft" && fastBackwardIntervalId == null) {
+                fastBackwardIntervalId = setInterval(FastBackward, 100);
+            }
+        });
+    
+        window.addEventListener('keyup', function(event) {
+            if (event.key === "ArrowLeft" && fastBackwardIntervalId != null) {
+                clearInterval(fastBackwardIntervalId);
+                fastBackwardIntervalId = null;
+                incrementValue = defaultIncrementValue;
+            }
+        });
+
+        //Activating fast forward
+        window.addEventListener('keydown', function(event) {
+            if (event.key === "ArrowRight" && fastForwardIntervalId == null) {
+                fastForwardIntervalId = setInterval(FastForward, 100);
+            }
+        });
+    
+        window.addEventListener('keyup', function(event) {
+            if (event.key === "ArrowRight" && fastForwardIntervalId != null) {
+                clearInterval(fastForwardIntervalId);
+                fastForwardIntervalId = null;
+                incrementValue = defaultIncrementValue;
+            }
+        });
+    })();
+
+    function FastForward() {
+        incrementValue = fastingStep;
     }
 
-    function DecreaseDelay() {
-        var scrollText = document.querySelector('.crawl');
-        delay -= delayChangeStep;
-        scrollText.style.animationDelay = `${delay}s`;
+    function FastBackward() {
+        incrementValue = -fastingStep;
     }
 
     function PlayMusic(filename, playTime) {
@@ -90,6 +86,24 @@ function StartAnimation(audioFilePath, playTime) {
 
         if (playTime) {
             audio.currentTime = playTime;
+        }
+    }
+
+    function StartAnimationLoop() {
+        crawlAnimationInterval = setInterval(function(){
+            topValue -= incrementValue;
+            translateZValue -= incrementValue * 0.41;
+            
+            document.getElementById('crawl').style = `
+                top: ${topValue}px;
+                transform: rotateX(25deg) translateZ(${translateZValue}px);
+            `;
+        }, updateTime);
+    }
+
+    function PauseAnimationLoop() {
+        if (crawlAnimationInterval) {
+            clearInterval(crawlAnimationInterval);
         }
     }
 };
