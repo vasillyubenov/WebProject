@@ -60,6 +60,9 @@ $html_file = $target_dir . $time . basename("htmlFile");
     $options = array('ignore_comments' => true);
     $html2text = new Html2Text($html, $options);
     $textContent = $html2text->getText();
+
+    $textContent = str_replace('*', "\n", $textContent);
+    $textContent = nl2br($textContent);
     
     $words = str_word_count($textContent, 1); // get words as an array
     $chunks = array_chunk($words, $chunkSize);
