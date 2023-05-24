@@ -16,7 +16,10 @@ document.addEventListener('DOMContentLoaded',() => {
     });
 });
 
-function StartAnimation() {
+function StartAnimation(text_step, playback_step) {
+  textFastingStep = text_step;
+  playbackStep = playback_step;
+
   var isPaused = false;
   let topValue = -100;
   let translateZValue = 0;
@@ -138,12 +141,14 @@ function StartAnimation() {
 }
 
 function GenerateConfig(_time, _audio_format) {
-  var config = {
-    time: _time,
-    audio_format: _audio_format,
-    text_step: textFastingStep,
-    payback_step: playbackStep,
-  };
+    console.log('bismilq')
+    var config = {
+        time: _time,
+        audio_format: _audio_format,
+        text_step: textFastingStep,
+        playback_step: playbackStep,
+    };
+    console.log('bismismilq')
 
   var configJSON = JSON.stringify(config, null, 2);
 

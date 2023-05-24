@@ -12,13 +12,15 @@ if (isset($_FILES['htmlFile'])) {
 }
 
 $audio = $_FILES['audioFile'];
+$audio_format = "";
 if (isset($audio)) {
     $file_form_name = "audioFile";
-    $format = explode("/", $audio["type"])[1];
-    upload_file($file_form_name, $target_dir, $curent_datetime, $format);
+    $audio_format = explode("/", $audio["type"])[1];
+    upload_file($file_form_name, $target_dir, $curent_datetime, $audio_format);
 }
 
-header("Location: visualize.php?time=" . $curent_datetime . "&audioFormat=" . $format);
+// echo "Location: visualize.php?time=" . $curent_datetime . "&audioFormat=". $audio_format;
+header("Location: visualize.php?time=" . $curent_datetime . "&audioFormat=". $audio_format);
 exit();
 
 function upload_file($file_form_name, $target_dir, $curent_datetime, $format)

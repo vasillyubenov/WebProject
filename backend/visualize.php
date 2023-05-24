@@ -4,15 +4,23 @@ use Html2Text\Html2Text;
 
 $time = $_GET["time"];
 $audio_format = $_GET["audioFormat"];
+$text_step = 4;
+if (isset($_GET["textStep"])) {
+  $text_step = $_GET["textStep"];
+}
+$playback_step = 0.5;
+if (isset($_GET["playbackStep"])) {
+  $playback_step = $_GET["playbackStep"];
+}
+
 $target_dir = "uploads/";
 $audio_file = $target_dir . $time . basename("audioFile") . "." . $audio_format;
-$html_file = $target_dir . $time . basename("htmlFile").".html";
+$html_file = $target_dir . $time . basename("htmlFile") . ".html";
 ?>
 
 <html lang="en">
 
 <head>
-  <script src='../frontend/js/animation.js'></script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +29,7 @@ $html_file = $target_dir . $time . basename("htmlFile").".html";
 </head>
 
 <body>
-  <button class="star-wars-button" onclick="GenerateConfig('<?php echo $time; ?>,<?php echo $audio_format ?>')">Generate
+  <button class="star-wars-button" onclick="GenerateConfig('<?php echo $time;?>','<?php echo $audio_format;?>')">Generate
     Config</button>
 
   <div style="position: absolute;
@@ -37,13 +45,15 @@ $html_file = $target_dir . $time . basename("htmlFile").".html";
     transition: all 0.3s ease;">
 
 
-    <audio id="audioPlayer" src=<?php echo $audio_file?> style="display: none"></audio>
+    <audio id="audioPlayer" src=<?php echo $audio_file ?> style="display: none"></audio>
 
   </div>
 
   <div class="fade"></div>
   <div id="play" class="action-button"></div>
   <div id="pause" class="action-button"></div>
+  <script src='../frontend/js/animation.js'></script>
+
   <section class="star-wars">
     <div id="crawl">
       <div class="title">
@@ -59,9 +69,9 @@ $html_file = $target_dir . $time . basename("htmlFile").".html";
       // $html2text = new Html2Text($html, $options);
       // $textContent = $html2text->getText();
       // $textContent = nl2br($textContent);
-
+      
       echo '<p style="text-aling:center;">' . $html . '</p>';
-      echo "<script>StartAnimation();</script>";
+      echo "<script>StartAnimation(" . $text_step . "," . $playback_step . ");</script>";
       ?>
   </section>
 
