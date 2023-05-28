@@ -18,19 +18,41 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-function StartAnimation(text_step, playback_step) {
-  textFastingStep = text_step;
-  playbackStep = playback_step;
-
+function StartAnimation(config) {
+  textFastingStep = config.text_step;
+  playbackStep = config.playback_step;
+  
   var isPaused = false;
   let topValue = -100;
+  // if (config.shouldPlayReverse) { 
+  if (true) { 
+    const crawlElement = document.getElementById("crawl");
+    // Subtract the height of the viewport from the scroll height of the element to get the initial top value
+    topValue = -(crawlElement.scrollHeight - window.innerHeight);
+  }
   let translateZValue = 0;
-  let incrementValue = 1;
-  const defaultIncrementValue = 1;
+  
+  if (true) {
+    translateZValue = topValue * 0.41;
+  }
+
+  let incrementValue = true ? -1 : 1;
+  const defaultIncrementValue = incrementValue;
   let crawlAnimationInterval;
   const updateTime = 10;
   let fastForwardIntervalId;
   let fastBackwardIntervalId;
+
+  if (!playButton) {
+    playButton = document.getElementById("play");
+  }
+
+  if (!pauseButton) {
+    pauseButton = document.getElementById("pause");
+  }
+
+  SetButton(playButton, config, true);
+  SetButton(pauseButton, config, false);
 
   ToggleAnimation();
 
@@ -109,7 +131,6 @@ function StartAnimation(text_step, playback_step) {
     crawlAnimationInterval = setInterval(function () {
       topValue -= incrementValue;
       translateZValue -= incrementValue * 0.41;
-
       document.getElementById("crawl").style = `
                   top: ${topValue}px;
                   transform: rotateX(25deg) translateZ(${translateZValue}px);
@@ -140,7 +161,7 @@ function StartAnimation(text_step, playback_step) {
 
   function DecreasePlaybackSpeed() {
     var audio = document.getElementById("audioPlayer");
-    if (audio.playbackRate - playback_step > 0) {
+    if (audio.playbackRate - playbackStep > 0) {
       audio.playbackRate -= playbackStep;
     } else {
       audio.playbackRate = 1;
@@ -153,15 +174,35 @@ function StartAnimation(text_step, playback_step) {
   }
 }
 
+function SetButton(button, config, isPlayButton = false) {
+  switch (isPlayButton ? config.playButtonShape : config.pauseButtonShape) {
+    case "circle":
+      button.style.borderRadius = "50%";
+      break;
+    case "square":
+      button.style.borderRadius = "0";
+      break;
+    default:
+      button.style.borderRadius = "50%";
+      break;
+  }
+
+  button.style.backgroundColor = isPlayButton ? config.playButtonColor : config.pauseButtonColor;
+}
+
 function GenerateConfig(_time, _audio_format) {
-  console.log("bismilq");
   var config = {
     time: _time,
     audio_format: _audio_format,
     text_step: textFastingStep,
     playback_step: playbackStep,
+    shouldPlayReverse: false,
+    playButtonShape: "circle",
+    pauseButtonShape: "circle",
+    playButtonColor: "feda4a",
+    pauseButtonColor: "feda4a",
+    textColor: "feda4a",
   };
-  console.log("bismismilq");
 
   var configJSON = JSON.stringify(config, null, 2);
 

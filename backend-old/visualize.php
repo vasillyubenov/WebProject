@@ -1,4 +1,5 @@
 <?php
+require_once 'config_class.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 use Html2Text\Html2Text;
 
@@ -12,6 +13,32 @@ $playback_step = 0.5;
 if (isset($_GET["playbackStep"])) {
   $playback_step = $_GET["playbackStep"];
 }
+$shouldPlayReverse = false;
+if (isset($_GET["shouldPlayReverse"])) {
+  $shouldPlayReverse = $_GET["shouldPlayReverse"];
+}
+$playButtonShape = "circle";
+if (isset($_GET["playButtonShape"])) {
+  $playButtonShape = $_GET["playButtonShape"];
+}
+$pauseButtonShape = "circle";
+if (isset($_GET["pauseButtonShape"])) {
+  $playButtonShape = $_GET["pauseButtonShape"];
+}
+$playButtonColor = "feda4a";
+if (isset($_GET["playButtonColor"])) {
+  $playButtonColor = $_GET["playButtonColor"];
+}
+$pauseButtonColor = "feda4a";
+if (isset($_GET["pauseButtonColor"])) {
+  $pauseButtonColor = $_GET["pauseButtonColor"];
+}
+$textColor = "feda4a";
+if (isset($_GET["textColor"])) {
+  $textColor = $_GET["textColor"];
+}
+
+$config = new Config($time, $text_step, $playback_step, $shouldPlayReverse, $playButtonShape, $pauseButtonShape, $playButtonColor, $pauseButtonColor, $textColor);
 
 $target_dir = "uploads/";
 $audio_file = $target_dir . $time . basename("audioFile") . "." . $audio_format;
@@ -61,17 +88,9 @@ $html_file = $target_dir . $time . basename("htmlFile") . ".html";
         <h1>A New Hope</h1>
       </div>
       <?php
-      $chunkSize = 5;
-
-      $html = file_get_contents($html_file);
-
-      // $options = array('ignore_comments' => true);
-      // $html2text = new Html2Text($html, $options);
-      // $textContent = $html2text->getText();
-      // $textContent = nl2br($textContent);
-      
-      echo '<p style="text-aling:center;">' . $html . '</p>';
-      echo "<script>StartAnimation(" . $text_step . "," . $playback_step . ");</script>";
+        $html = file_get_contents($html_file);
+        echo '<p style="text-aling:center;">' . $html . '</p>';
+        echo "<script>StartAnimation(" . $config . ");</script>";
       ?>
   </section>
 
