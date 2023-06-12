@@ -11,7 +11,7 @@ include("authenticate.php");
 </head>
 <body>
     <div class="form">
-        <p>Hey, <?php echo $_SESSION['username']; ?>!</p>
+        <p>Hey, <?php echo $_SESSION['email']; ?>!</p>
         <p>You are now user dashboard page.</p>
         <p><a href="logout.php">Logout</a></p>
     </div>
