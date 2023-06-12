@@ -1,9 +1,8 @@
 <?php
 require_once 'config_class.php';
 require_once __DIR__ . '/../vendor/autoload.php';
-use Html2Text\Html2Text;
 
-$time = $_GET["time"];
+$id = $_GET["id"];
 $audio_format = $_GET["audioFormat"];
 $text_step = 4;
 if (isset($_GET["textStep"])) {

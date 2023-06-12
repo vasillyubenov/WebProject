@@ -14,11 +14,13 @@
         $email = mysqli_real_escape_string($con, $email);
         $password = stripslashes($_REQUEST['password']);
         $password = mysqli_real_escape_string($con, $password);
-        $query    = "SELECT * FROM `users` WHERE email='$email'
+        $query    = "SELECT id FROM `users` WHERE email='$email'
                      AND password='" . md5($password) . "'";
         $result = mysqli_query($con, $query) or die(mysql_error());
         $rows = mysqli_num_rows($result);
         if ($rows == 1) {
+            $user = mysqli_fetch_assoc($result);
+            $_SESSION['id'] = $user['id'];        
             $_SESSION['email'] = $email;
             header("Location: home.php");
         } else {

@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
-
 $target_dir = "uploads/";
 $curent_datetime = date("Y-m-d_H-i-s");
 $target_file = "";
@@ -19,7 +18,38 @@ if (isset($audio)) {
     upload_file($file_form_name, $target_dir, $curent_datetime, $audio_format);
 }
 
-header("Location: visualize.php?time=" . $curent_datetime . "&audioFormat=". $audio_format);
+
+include("authenticate.php");
+require('database/database.php');
+
+$query = "INSERT INTO presentations (id) VALUES ('$curent_datetime')";
+$result = mysqli_query($con, $query);
+if ($result) {
+    echo "<div class='form'>
+              <h3>Uploaded successfully.</h3><br/>
+              </div>";
+} else {
+    echo "<div class='form'>
+              <h3>Something went wrong</h3><br/>
+              </div>";
+}
+
+$id = $_SESSION['id'];
+
+$query = "INSERT INTO users_have_presentations (user_id, presentation_id) VALUES ($id, '$curent_datetime')";
+echo $query;
+$result = mysqli_query($con, $query);
+if ($result) {
+    echo "<div class='form'>
+              <h3>Uploaded successfully.</h3><br/>
+              </div>";
+} else {
+    echo "<div class='form'>
+              <h3>Something went wrong</h3><br/>
+              </div>";
+}
+
+header("Location: visualize.php?time=" . $curent_datetime . "&audioFormat=" . $audio_format);
 exit();
 
 function upload_file($file_form_name, $target_dir, $curent_datetime, $format)
