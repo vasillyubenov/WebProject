@@ -3,7 +3,7 @@ include("authenticate.php");
 require('database/database.php');
 require_once __DIR__ . '/../vendor/autoload.php';
 $target_dir = "uploads/";
-$time = date("Y-m-d_H-i-s");
+$time = date("Y-m-d_H:i:s");
 $target_file = "";
 
 $html = $_FILES['htmlFile'];
@@ -50,8 +50,6 @@ if ($config["size"] > 0) {
     $textColor = $jsonObject->textColor;
 }
 
-
-$id = NULL; // Assuming `id` is an auto-incremented field
 $owner_id = $_SESSION['id'];
 
 $stmt = $conn->prepare("INSERT INTO presentations (
@@ -80,7 +78,7 @@ $values = [
     $textColor
 ];
 
-$stmt->bind_param("iisddisssss", ...$values);
+$stmt->bind_param("issddisssss", ...$values);
 
 $stmt->execute();
 if ($stmt->error) {
