@@ -27,7 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $response = array(
             "success" => true,
-            "message" => "Login successful"
+            "message" => "Login successful",
+            "userId"  => $user['id']
         );
         echo json_encode($response);
     } else {

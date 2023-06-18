@@ -25,8 +25,9 @@
     })
     .then(response => response.json())
     .then(data => {
-      if (data.message) {
-        alert(data.message);
+      if (data.success) {
+        sessionStorage.setItem('id', data.userId);
+        sessionStorage.setItem('email', email);
       }
     })
     .catch(error => {
