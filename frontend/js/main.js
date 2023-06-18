@@ -28,6 +28,7 @@
       if (data.success) {
         sessionStorage.setItem('id', data.userId);
         sessionStorage.setItem('email', email);
+        window.location.href = "../../backend/home.php";
       }
     })
     .catch(error => {
