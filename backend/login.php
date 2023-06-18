@@ -36,8 +36,7 @@
         <input type="text"  name="email" placeholder="Email" autofocus="true"/>
         <input type="password"  name="password" placeholder="Password"/>
         <input type="submit" value="Login" name="submit" class="login-button"/>
-        <p ><a href="registration.php">New Registration</a></p>
-  </form>
+        <p ><a href="register.php">Register</a></p>
 <?php
     }
 ?>

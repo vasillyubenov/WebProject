@@ -71,14 +71,14 @@
       </div>
       <div class="container">
         <div id="loginForm">
-          <form action="#" method="post">
+          <form id="login-form" action="#" method="post">
             <div class="form-group">
-              <label for="loginUsername">Username:</label>
+              <label for="loginEmail">Email:</label>
               <input
                 type="text"
-                id="loginUsername"
-                name="loginUsername"
-                placeholder="Username"
+                id="loginEmail"
+                name="loginEmail"
+                placeholder="Email"
                 required
               />
             </div>
@@ -98,14 +98,14 @@
           </form>
         </div>
         <div id="registerForm" style="display: none">
-          <form action="http://localhost:8000/backend/register.php" method="post">
+          <form id="register-form" action="http://localhost:8000/backend/register.php" method="post">
             <div class="form-group">
-              <label for="registerUsername">Username:</label>
+              <label for="registerEmail">Email:</label>
               <input
                 type="text"
-                id="registerUsername"
-                name="registerUsername"
-                placeholder="Username"
+                id="registerEmail"
+                name="registerEmail"
+                placeholder="Email"
                 required
               />
             </div>
@@ -137,25 +137,6 @@
       </div>
     </div>
 
-    <script>
-      function switchTab(tabName) {
-        var loginForm = document.getElementById("loginForm");
-        var registerForm = document.getElementById("registerForm");
-        var loginTab = document.getElementsByClassName("tab")[0];
-        var registerTab = document.getElementsByClassName("tab")[1];
-
-        if (tabName === "login") {
-          loginForm.style.display = "block";
-          registerForm.style.display = "none";
-          loginTab.classList.add("active");
-          registerTab.classList.remove("active");
-        } else {
-          loginForm.style.display = "none";
-          registerForm.style.display = "block";
-          loginTab.classList.remove("active");
-          registerTab.classList.add("active");
-        }
-      }
-    </script>
+    <script src="./js/main.js"></script>
   </body>
 </html>
