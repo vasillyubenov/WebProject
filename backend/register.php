@@ -1,66 +1,39 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <title>Registration</title>
-    <link rel="stylesheet" href="style.css" />
-</head>
-
-<body>
-    <?php
-
+<?php
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type");
 
     require('database/database.php');
-    function emailExists($email, $con)
-    {
+
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    function emailExists($email, $con) {
         $email = mysqli_real_escape_string($con, $email);
         $query = "SELECT * FROM `users` WHERE email = '$email'";
         $result = mysqli_query($con, $query);
         return mysqli_num_rows($result) > 0;
     }
 
-    if (isset($_REQUEST['email'])) {
-
-        $email = stripslashes($_REQUEST['email']);
+    if (isset($data['email'])) {
+        $email = stripslashes($data['email']);
         $email = mysqli_real_escape_string($con, $email);
 
         if (emailExists($email, $con)) {
-            echo "<div class='form'>
-                  <h3>Registration failed. User with this email already exists.</h3><br/>
-                  <p class='link'>Click here to <a href='register.php'>register</a> again.</p>
-                  </div>";
+            echo json_encode(["message" => "Registration failed. User with this email already exists.", "success" => false]);
         } else {
-            $password = stripslashes($_REQUEST['password']);
+            $password = stripslashes($data['password']);
             $password = mysqli_real_escape_string($con, $password);
             $create_datetime = date("Y-m-d H:i:s");
             $query = "INSERT into `users` (email, password, created_at)
                      VALUES ('$email', '" . md5($password) . "', '$create_datetime')";
             $result = mysqli_query($con, $query);
             if ($result) {
-                echo "<div class='form'>
-                  <h3>You are registered successfully.</h3><br/>
-                  <p class='link'>Click here to <a href='login.php'>Login</a></p>
-                  </div>";
+                echo json_encode(["message" => "You are registered successfully.", "success" => true]);
             } else {
-                echo "<div class='form'>
-                  <h3>Required fields are missing.</h3><br/>
-                  <p class='link'>Click here to <a href='register.php'>register</a> again.</p>
-                  </div>";
+                echo json_encode(["message" => "Required fields are missing.", "success" => false]);
             }
         }
     } else {
-        ?>
-        <form action="" method="post">
-            <h1 class="login-title">Registration</h1>
-            <input type="text" name="email" placeholder="Email" required />
-            <input type="password" name="password" placeholder="Password">
-            <input type="submit" name="submit" value="Register" class="login-button">
-            <p><a href="login.php">Click to Login</a></p>
-        </form>
-        <?php
+        echo json_encode(["message" => "No data posted with HTTP POST." . json_encode($data), "success" => false]);
     }
-    ?>
-</body>
-
-</html>
+?>

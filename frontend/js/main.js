@@ -1,23 +1,79 @@
 // IIFE, because we are cool :)
 (() => {
   document.querySelector("#login-form").addEventListener("submit", function(event) {
+    event.preventDefault();
     const email = document.getElementById("loginEmail").value;
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
 
     if (!emailRegex.test(email)) {
       alert("Please enter a valid email.");
-      event.preventDefault();
+      return;
     }
+
+    const formData = new FormData(event.target);
+    
+    fetch('backend/login.php', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message) {
+        alert(data.message);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   });
 
   document.querySelector("#register-form").addEventListener("submit", function(event) {
+    
+    event.preventDefault();
+
     const email = document.getElementById("registerEmail").value;
+    const password = document.getElementById("registerPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
 
     if (!emailRegex.test(email)) {
-      alert("Please enter a valid email.");
-      event.preventDefault();
+      alert("Please enter a valid email!");
+      return;
     }
+
+    if (confirmPassword !== password) {
+      alert("Please enter same passwords!");
+      return;
+    }
+
+    const formData = {
+      "email": email,
+      "password": password
+    };
+    
+    fetch('../../backend/register.php', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        switchTab('login');
+        alert(data.message);
+      }
+      else {
+        alert(data.message);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
   });
 })();
 
