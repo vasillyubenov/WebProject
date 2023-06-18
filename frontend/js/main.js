@@ -4,15 +4,19 @@
     event.preventDefault();
     const email = document.getElementById("loginEmail").value;
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    const password = document.getElementById("loginPassword").value;
 
     if (!emailRegex.test(email)) {
       alert("Please enter a valid email.");
       return;
     }
 
-    const formData = new FormData(event.target);
+    const formData = {
+      "email": email,
+      "password": password
+    };
     
-    fetch('backend/login.php', {
+    fetch('../../backend/login.php', {
       method: 'POST',
       body: JSON.stringify(formData),
       headers: {
@@ -31,7 +35,6 @@
   });
 
   document.querySelector("#register-form").addEventListener("submit", function(event) {
-    
     event.preventDefault();
 
     const email = document.getElementById("registerEmail").value;

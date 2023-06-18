@@ -1,44 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css"/>
-</head>
-<body>
 <?php
-    require('database/database.php');
-    session_start();
-    if (isset($_POST['email'])) {
-        $email = stripslashes($_REQUEST['email']);
-        $email = mysqli_real_escape_string($con, $email);
-        $password = stripslashes($_REQUEST['password']);
-        $password = mysqli_real_escape_string($con, $password);
-        $query    = "SELECT id FROM `users` WHERE email='$email'
-                     AND password='" . md5($password) . "'";
-        $result = mysqli_query($con, $query) or die(mysql_error());
-        $rows = mysqli_num_rows($result);
-        if ($rows == 1) {
-            $user = mysqli_fetch_assoc($result);
-            $_SESSION['id'] = $user['id'];        
-            $_SESSION['email'] = $email;
-            header("Location: home.php");
-        } else {
-            echo "<div class='form'>
-                  <h3>Incorrect Email/password.</h3><br/>
-                  <p class='link'>Click here to <a href='login.php'>Login</a> again.</p>
-                  </div>";
-        }
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+require('database/database.php');
+session_start();
+
+$data = json_decode(file_get_contents('php://input'), true);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $data['email'];
+    $password = $data['password'];
+
+    $email = stripslashes($email);
+    $email = mysqli_real_escape_string($conn, $email);
+    $password = stripslashes($password);
+    $password = mysqli_real_escape_string($conn, $password);
+
+    $query = "SELECT id FROM `users` WHERE email='$email' AND password='" . md5($password) . "'";
+    $result = mysqli_query($conn, $query) or die(mysqli_error($conn));
+    $rows = mysqli_num_rows($result);
+
+    if ($rows == 1) {
+        $user = mysqli_fetch_assoc($result);
+        $_SESSION['id'] = $user['id'];
+        $_SESSION['email'] = $email;
+
+        $response = array(
+            "success" => true,
+            "message" => "Login successful"
+        );
+        echo json_encode($response);
     } else {
-?>
-    <form method="post" name="login">
-        <h1 >Login</h1>
-        <input type="text"  name="email" placeholder="Email" autofocus="true"/>
-        <input type="password"  name="password" placeholder="Password"/>
-        <input type="submit" value="Login" name="submit" class="login-button"/>
-        <p ><a href="register.php">Register</a></p>
-<?php
+        $response = array(
+            "success" => false,
+            "message" => "Incorrect email/password"
+        );
+        echo json_encode($response);
     }
+} else {
+    $response = array(
+        "success" => false,
+        "message" => "Invalid request method"
+    );
+    echo json_encode($response);
+}
 ?>
-</body>
-</html>
