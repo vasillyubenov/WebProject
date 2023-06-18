@@ -1,41 +1,21 @@
 <?php
 require_once 'config_class.php';
 require_once __DIR__ . '/../vendor/autoload.php';
+include("authenticate.php");
+require('database/database.php');
 
-$id = $_GET["id"];
-$audio_format = $_GET["audioFormat"];
-$text_step = 4;
-if (isset($_GET["textStep"])) {
-  $text_step = $_GET["textStep"];
-}
-$playback_step = 0.5;
-if (isset($_GET["playbackStep"])) {
-  $playback_step = $_GET["playbackStep"];
-}
-$shouldPlayReverse = false;
-if (isset($_GET["shouldPlayReverse"])) {
-  $shouldPlayReverse = $_GET["shouldPlayReverse"];
-}
-$playButtonShape = "circle";
-if (isset($_GET["playButtonShape"])) {
-  $playButtonShape = $_GET["playButtonShape"];
-}
-$pauseButtonShape = "circle";
-if (isset($_GET["pauseButtonShape"])) {
-  $playButtonShape = $_GET["pauseButtonShape"];
-}
-$playButtonColor = "feda4a";
-if (isset($_GET["playButtonColor"])) {
-  $playButtonColor = $_GET["playButtonColor"];
-}
-$pauseButtonColor = "feda4a";
-if (isset($_GET["pauseButtonColor"])) {
-  $pauseButtonColor = $_GET["pauseButtonColor"];
-}
-$textColor = "feda4a";
-if (isset($_GET["textColor"])) {
-  $textColor = $_GET["textColor"];
-}
+$presentationId = $_GET["presentationId"];
+
+$stmt = $conn->prepare("SELECT time, audio_format, text_step, playback_step, play_reverse, play_button_shape, pause_button_shape, play_button_color, pause_button_color, text_color FROM presentations WHERE id = ?");
+$stmt->bind_param("i", $presentationId);
+
+$stmt->execute();
+$stmt->bind_result($time, $audio_format, $text_step, $playback_step, $shouldPlayReverse, $playButtonShape, $pauseButtonShape, $playButtonColor, $pauseButtonColor, $textColor);
+
+$stmt->fetch();
+
+$stmt->close();
+
 
 $config = new Config($time, $text_step, $playback_step, $shouldPlayReverse, $playButtonShape, $pauseButtonShape, $playButtonColor, $pauseButtonColor, $textColor);
 

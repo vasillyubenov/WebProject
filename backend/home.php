@@ -25,12 +25,6 @@ include("authenticate.php");
         <input id="referat-input" type="file" id="htmlFile" name="htmlFile" accept=".html"><br><br>
         <label for="audioFile">Audio File:</label><br>
         <input id="audio-input" type="file" id="audioFile" name="audioFile" accept=".mp3,.wav,.ogg"><br><br>
-        <div class="center-wrapper">
-            <input id="form-submitter" type="submit" value="Upload">
-        </div>
-    </form>
-
-    <form class="form-container" id="config-form" action="http://localhost:8000/backend/config.php" method="post" enctype="multipart/form-data">
         <label for="configFile">JSON Config File:</label><br>
         <input id="config-input" type="file" id="configFile" name="configFile" accept=".json"><br><br>
         <div class="center-wrapper">

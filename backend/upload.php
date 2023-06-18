@@ -1,13 +1,15 @@
 <?php
+include("authenticate.php");
+require('database/database.php');
 require_once __DIR__ . '/../vendor/autoload.php';
 $target_dir = "uploads/";
-$curent_datetime = date("Y-m-d_H-i-s");
+$time = date("Y-m-d_H-i-s");
 $target_file = "";
 
 $html = $_FILES['htmlFile'];
 if (isset($_FILES['htmlFile'])) {
     $file_form_name = "htmlFile";
-    upload_file($file_form_name, $target_dir, $curent_datetime, "html");
+    upload_file($file_form_name, $target_dir, $time, "html");
 }
 
 $audio = $_FILES['audioFile'];
@@ -15,41 +17,83 @@ $audio_format = "";
 if (isset($audio)) {
     $file_form_name = "audioFile";
     $audio_format = explode("/", $audio["type"])[1];
-    upload_file($file_form_name, $target_dir, $curent_datetime, $audio_format);
+    upload_file($file_form_name, $target_dir, $time, $audio_format);
+}
+
+$text_step = 4;
+$playback_step = 0.5;
+$shouldPlayReverse = false;
+$playButtonShape = "circle";
+$pauseButtonShape = "circle";
+$playButtonColor = "feda4a";
+$pauseButtonColor = "feda4a";
+$textColor = "feda4a";
+
+$config = $_FILES["configFile"];
+if ($config["size"] > 0) {
+    echo "4urkaaaaaa------------------------------";
+    $file_form_name = "audioFile";
+    $audio_format = explode("/", $audio["type"])[1];
+
+    $jsonString = file_get_contents($config["tmp_name"]);
+    $jsonObject = json_decode($jsonString);
+    
+    $time = $jsonObject->time;
+    $audio_format = $jsonObject->audio_format;
+    $text_step = $jsonObject->text_step;
+    $playback_step = $jsonObject->playback_step;
+    $shouldPlayReverse = $jsonObject->shouldPlayReverse;
+    $playButtonShape = $jsonObject->playButtonShape;
+    $pauseButtonShape = $jsonObject->pauseButtonShape;
+    $playButtonColor = $jsonObject->playButtonColor;
+    $pauseButtonColor = $jsonObject->pauseButtonColor;
+    $textColor = $jsonObject->textColor;
 }
 
 
-include("authenticate.php");
-require('database/database.php');
+$id = NULL; // Assuming `id` is an auto-incremented field
+$owner_id = $_SESSION['id'];
 
-$query = "INSERT INTO presentations (id) VALUES ('$curent_datetime')";
-$result = mysqli_query($con, $query);
-if ($result) {
-    echo "<div class='form'>
-              <h3>Uploaded successfully.</h3><br/>
-              </div>";
-} else {
-    echo "<div class='form'>
-              <h3>Something went wrong</h3><br/>
-              </div>";
-}
+$stmt = $conn->prepare("INSERT INTO presentations (
+                                owner_id, 
+                                time, 
+                                audio_format, 
+                                text_step, 
+                                playback_step, 
+                                play_reverse, 
+                                play_button_shape, 
+                                pause_button_shape, 
+                                play_button_color, 
+                                pause_button_color, 
+                                text_color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$values = [
+    $owner_id,
+    $time,
+    $audio_format,
+    $text_step,
+    $playback_step,
+    $shouldPlayReverse,
+    $playButtonShape,
+    $pauseButtonShape,
+    $playButtonColor,
+    $pauseButtonColor,
+    $textColor
+];
 
-$id = $_SESSION['id'];
+$stmt->bind_param("iisddisssss", ...$values);
 
-$query = "INSERT INTO users_have_presentations (user_id, presentation_id) VALUES ($id, '$curent_datetime')";
-echo $query;
-$result = mysqli_query($con, $query);
-if ($result) {
-    echo "<div class='form'>
-              <h3>Uploaded successfully.</h3><br/>
-              </div>";
-} else {
-    echo "<div class='form'>
-              <h3>Something went wrong</h3><br/>
-              </div>";
-}
+$stmt->execute();
+if ($stmt->error) {
+    echo "Error: " . $stmt->error;
+    exit();
+} 
 
-header("Location: visualize.php?time=" . $curent_datetime . "&audioFormat=" . $audio_format);
+$lastInsertId = $conn->insert_id;
+echo "Record inserted successfully.";
+$stmt->close();
+
+
+header("Location: visualize.php?presentationId=" . $lastInsertId);
 exit();
 
 function upload_file($file_form_name, $target_dir, $curent_datetime, $format)
