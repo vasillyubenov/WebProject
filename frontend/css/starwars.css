@@ -31,7 +31,6 @@ body {
 
 #crawl {
   position: relative;
-  top: 99999px;
   transform-origin: 50% 100%;
 }
 

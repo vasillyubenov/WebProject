@@ -19,29 +19,24 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function StartAnimation(config) {
+  const translateZValue = 20;
+  const updateTime = 10;
+  let incrementValue = config.shouldPlayReverse ? 1 : -1;
+  // let incrementValue = true ? 1 : -1;
+  const defaultIncrementValue = incrementValue;
+  let crawlAnimationInterval;
+  let fastForwardIntervalId;
+  let fastBackwardIntervalId;
+  let isPaused = false;
+  let translateYValue = -100;
   textFastingStep = config.text_step;
   playbackStep = config.playback_step;
   
-  var isPaused = false;
-  let topValue = -100;
-  // if (config.shouldPlayReverse) { 
-  if (true) { 
+  if (config.shouldPlayReverse) { 
     const crawlElement = document.getElementById("crawl");
     // Subtract the height of the viewport from the scroll height of the element to get the initial top value
-    topValue = -(crawlElement.scrollHeight - window.innerHeight);
+    translateYValue = -(crawlElement.scrollHeight + window.innerHeight);
   }
-  let translateZValue = 0;
-  
-  if (true) {
-    translateZValue = topValue * 0.41;
-  }
-
-  let incrementValue = true ? -1 : 1;
-  const defaultIncrementValue = incrementValue;
-  let crawlAnimationInterval;
-  const updateTime = 10;
-  let fastForwardIntervalId;
-  let fastBackwardIntervalId;
 
   if (!playButton) {
     playButton = document.getElementById("play");
@@ -120,21 +115,17 @@ function StartAnimation(config) {
   })();
 
   function FastForward() {
-    incrementValue = textFastingStep;
+    incrementValue = config.shouldPlayReverse ? 1 : -1 * textFastingStep;
   }
 
   function FastBackward() {
-    incrementValue = -textFastingStep;
+    incrementValue = config.shouldPlayReverse ? 1 : -1 * -textFastingStep;
   }
 
   function StartAnimationLoop() {
     crawlAnimationInterval = setInterval(function () {
-      topValue -= incrementValue;
-      translateZValue -= incrementValue * 0.41;
-      document.getElementById("crawl").style = `
-                  top: ${topValue}px;
-                  transform: rotateX(25deg) translateZ(${translateZValue}px);
-              `;
+      translateYValue += incrementValue;
+      document.getElementById("crawl").style = `transform: rotateX(25deg) translateY(${translateYValue}px) translateZ(${translateZValue}px);`;
     }, updateTime);
   }
 
