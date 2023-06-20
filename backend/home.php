@@ -9,20 +9,7 @@ include("authenticate.php");
     <title>Dashboard - Client area</title>
     <link rel="stylesheet" href="../frontend/css/styles.css" />
     <style>
-        .presentation-card {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            cursor: pointer;
-        }
-        .presentation-card:hover .presentation-details {
-            display: block;
-        }
-        .presentation-details {
-            display: none;
-            margin-top: 10px;
-            padding: 10px;
-        }
+        
     </style>
 </head>
 
@@ -30,9 +17,11 @@ include("authenticate.php");
     <div class="header-wrapper">
         <img id="logo" src="../frontend/assets/images/logo.png" alt="logo">
         <h2 class="star-wars-title">Star Wars Cinematic Project</h2>
-        <p>Hey, <?php echo $_SESSION['email']; ?>!</p>
-        <p><a href="logout.php">Logout</a></p>
+        
+        <div class="logout-button">Logout</div>
     </div>
+    
+    <p class="center-wrapper welcome">Hey, <?php echo $_SESSION['email']; ?>!</p>
 
     <div>
         <form class="form-container" id="upload-form-form" action="http://localhost:8000/backend/upload.php" method="post" enctype="multipart/form-data">
@@ -48,7 +37,7 @@ include("authenticate.php");
         </form>
     </div>
 
-    <div>
+    <div class="cards-wrapper">
         <?php
         require('database/database.php');
         $user_id = $_SESSION['id'];

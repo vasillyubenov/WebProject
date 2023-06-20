@@ -31,7 +31,6 @@ $textColor = "feda4a";
 
 $config = $_FILES["configFile"];
 if ($config["size"] > 0) {
-    echo "4urkaaaaaa------------------------------";
     $file_form_name = "audioFile";
     $audio_format = explode("/", $audio["type"])[1];
 
