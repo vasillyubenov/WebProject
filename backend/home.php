@@ -18,7 +18,7 @@ include("authenticate.php");
         <img id="logo" src="../frontend/assets/images/logo.png" alt="logo">
         <h2 class="star-wars-title">Star Wars Cinematic Project</h2>
         
-        <div class="logout-button">Logout</div>
+        <div class="logout-button" onclick="logout()">Logout</div>
     </div>
     
     <p class="center-wrapper welcome">Hey, <?php echo $_SESSION['email']; ?>!</p>
@@ -86,6 +86,10 @@ include("authenticate.php");
     </div>
 
     <script src="../frontend/js/main.js"></script>
-    <script src="../frontend/js/configEditor.js"></script>
+    <script>
+        function logout() {
+            window.location.href = "logout.php";
+        }
+    </script>
 </body>
 </html>

@@ -19,15 +19,23 @@ The project is structured as follows:
 | |--📄index.html
 | |--📁css
 | | |--📄style.css
+| | |--starwars.css
 | |--📁js
-| | |--📄main.js
 | | |--📄animation.js
+| | |--📄main.js
 | |--📁assets
 | | |--📁fonts
 | | |--📁images
 |
 |--📁backend
-| |--📄server.php
+| |--📄authenticate.php
+| |--📄config_class.php
+| |--📄home.php
+| |--📄login.php
+| |--📄logout.php
+| |--📄register.php
+| |--📄upload.php
+| |--📄visualize.php
 ```
 
 ## Getting Started
