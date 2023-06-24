@@ -12,7 +12,7 @@ This platform enables you to generate and visualize high-quality motion graphics
 
 ## Project Structure
 The project is structured as follows:
-
+```
 📁project_root
 |
 |--📁frontend
@@ -28,6 +28,7 @@ The project is structured as follows:
 |
 |--📁backend
 | |--📄server.php
+```
 
 ## Getting Started
 1. Clone this repository or download and unzip the project folder.
