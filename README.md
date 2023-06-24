@@ -1,8 +1,6 @@
-# Motion Graphics Generator (Web Project) Alex Kolachev ft. Vasil Lyubenov
+# Motion Graphics Generator (Web Project) Alex Kolachev ft. Vasil Lyubenov (Final Version)
 
-This platform enables you to generate and visualize high-quality motion graphics. From 'Star Wars' style text crawls to various other animations, this platform allows you to customize animations based on the data and settings provided in two JSON files: `config.json` for animation settings, and `data.json` for the data to be animated.
-
-The platform also includes a visual configuration editor, allowing the users to easily modify the settings. In addition, the platform provides an option to attach an audio file or music that plays during the animation. It features a 'full-screen' mode alongside the normal mode and offers user-friendly controls for starting, pausing, resuming, and adjusting the volume of the sound.
+This platform enables you to generate and visualize high-quality motion graphics. From 'Star Wars' style text crawls to various other animations, this platform allows you to customize animations based on the config file.
 
 ## Prerequisites
 - PHP 7.4 or above
@@ -30,13 +28,6 @@ The project is structured as follows:
 |
 |--📁backend
 | |--📄server.php
-|
-|--📁data
-| |--📄config.json
-| |--📄data.json
-|
-|--📄.htaccess
-|--📄requirements.txt
 
 ## Getting Started
 1. Clone this repository or download and unzip the project folder.
