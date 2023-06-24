@@ -37,8 +37,14 @@ if ($config["size"] > 0) {
     $jsonString = file_get_contents($config["tmp_name"]);
     $jsonObject = json_decode($jsonString);
     
-    $time = $jsonObject->time;
-    $audio_format = $jsonObject->audio_format;
+    if (!isset($_FILES['htmlFile'])) {
+        $time = $jsonObject->time;
+    }
+
+    if (!isset($_FILES['audioFile'])) {
+        $audio_format = $jsonObject->audio_format;
+    }
+
     $text_step = $jsonObject->text_step;
     $playback_step = $jsonObject->playback_step;
     $shouldPlayReverse = $jsonObject->shouldPlayReverse;
