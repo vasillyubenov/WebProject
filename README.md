@@ -22,10 +22,9 @@ The project is structured as follows:
 | | |--📄style.css
 | |--📁js
 | | |--📄main.js
-| | |--📄configEditor.js
 | | |--📄animation.js
 | |--📁assets
-| | |--📁audio
+| | |--📁fonts
 | | |--📁images
 |
 |--📁backend
@@ -42,12 +41,5 @@ The project is structured as follows:
 1. Clone this repository or download and unzip the project folder.
 2. Navigate into the `project_root` directory.
 3. Run the PHP server: `php -S localhost:8000`
-4. Open your web browser and visit `http://localhost:8000/frontend/index.html`
+4. Open your web browser and visit `http://localhost:8000`
 5. Enjoy the app!
-
-## Contributing
-Contributions, issues, and feature requests are welcome! Feel free to check issues page.
-
-## License
-This project is [MIT](LICENSE) licensed.
-
