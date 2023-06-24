@@ -1,25 +1,5 @@
-var textFastingStep = 4;
-var playbackStep = 0.3;
-let playButton;
-let pauseButton;
-
 document.addEventListener("DOMContentLoaded", () => {
-  playButton = document.getElementById("play");
-  pauseButton = document.getElementById("pause");
-
-  playButton.addEventListener("click", function (event) {
-    StartAnimation();
-    if (playButton) {
-      playButton.style.display = "none";
-    }
-  });
-
-  pauseButton.addEventListener("click", function (event) {
-    StartAnimation();
-    if (playButton) {
-      playButton.style.display = "none";
-    }
-  });
+  
 });
 
 function StartAnimation(config) {
@@ -35,6 +15,17 @@ function StartAnimation(config) {
   let translateYValue = -100;
   textFastingStep = config.text_step;
   playbackStep = config.playback_step;
+
+  let playButton = document.getElementById("play");
+  let pauseButton = document.getElementById("pause");
+
+  playButton.addEventListener("click", function (event) {
+    ToggleAnimation();
+  });
+
+  pauseButton.addEventListener("click", function (event) {
+    ToggleAnimation();
+  });
   
   if (config.shouldPlayReverse) { 
     const crawlElement = document.getElementById("crawl");
