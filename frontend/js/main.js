@@ -30,6 +30,9 @@
         sessionStorage.setItem('email', email);
         window.location.href = "../../backend/home.php";
       }
+      else {
+        alert("Incorrect credentials!");
+      }
     })
     .catch(error => {
       console.error('Error:', error);
