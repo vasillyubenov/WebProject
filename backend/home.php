@@ -87,7 +87,5 @@ include("authenticate.php");
 
     <script src="../frontend/js/main.js"></script>
     <script src="../frontend/js/configEditor.js"></script>
-    <script src="../frontend/js/animation.js"></script>
-
 </body>
 </html>

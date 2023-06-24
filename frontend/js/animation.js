@@ -9,12 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   playButton.addEventListener("click", function (event) {
     StartAnimation();
-    playButton.style.display = "none";
+    if (playButton) {
+      playButton.style.display = "none";
+    }
   });
 
   pauseButton.addEventListener("click", function (event) {
     StartAnimation();
-    playButton.style.display = "none";
+    if (playButton) {
+      playButton.style.display = "none";
+    }
   });
 });
 
@@ -115,11 +119,11 @@ function StartAnimation(config) {
   })();
 
   function FastForward() {
-    incrementValue = config.shouldPlayReverse ? 1 : -1 * textFastingStep;
+    incrementValue = config.shouldPlayReverse ? textFastingStep : -textFastingStep;
   }
 
   function FastBackward() {
-    incrementValue = config.shouldPlayReverse ? 1 : -1 * -textFastingStep;
+    incrementValue = config.shouldPlayReverse ? -textFastingStep : textFastingStep;
   }
 
   function StartAnimationLoop() {
