@@ -1,5 +1,4 @@
 <?php
-
 $playback_step = 0.5;
 if (isset($_GET["playbackStep"])) {
   $playback_step = $_GET["playbackStep"];
@@ -16,15 +15,15 @@ $pauseButtonShape = "circle";
 if (isset($_GET["pauseButtonShape"])) {
   $playButtonShape = $_GET["pauseButtonShape"];
 }
-$playButtonColor = "feda4a";
+$playButtonColor = "#feda4a";
 if (isset($_GET["playButtonColor"])) {
   $playButtonColor = $_GET["playButtonColor"];
 }
-$pauseButtonColor = "feda4a";
+$pauseButtonColor = "#feda4a";
 if (isset($_GET["pauseButtonColor"])) {
   $pauseButtonColor = $_GET["pauseButtonColor"];
 }
-$textColor = "feda4a";
+$textColor = "#feda4a";
 if (isset($_GET["textColor"])) {
   $textColor = $_GET["textColor"];
 }

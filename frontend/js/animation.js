@@ -1,12 +1,7 @@
-document.addEventListener("DOMContentLoaded", () => {
-  
-});
-
 function StartAnimation(config) {
   const translateZValue = 20;
   const updateTime = 10;
   let incrementValue = config.shouldPlayReverse ? 1 : -1;
-  // let incrementValue = true ? 1 : -1;
   const defaultIncrementValue = incrementValue;
   let crawlAnimationInterval;
   let fastForwardIntervalId;
@@ -33,16 +28,9 @@ function StartAnimation(config) {
     translateYValue = -(crawlElement.scrollHeight + window.innerHeight);
   }
 
-  if (!playButton) {
-    playButton = document.getElementById("play");
-  }
-
-  if (!pauseButton) {
-    pauseButton = document.getElementById("pause");
-  }
-
   SetButton(playButton, config, true);
   SetButton(pauseButton, config, false);
+  SetTextColor(config.textColor);
 
   ToggleAnimation();
 
@@ -54,14 +42,19 @@ function StartAnimation(config) {
 
   function ToggleAnimation() {
     isPaused = !isPaused;
-
+    
     if (pauseButton) {
       pauseButton.style.display = isPaused ? "block" : "none";
     }
-
-    if (!isPaused && playButton.style.display !== "none") {
+    
+    if (isPaused && playButton.style.display !== "none") {
+      playButton.style.display = "block";
+      pauseButton.style.display = "none";
+    }
+    else {
       playButton.style.display = "none";
     }
+    
 
     if (!isPaused) {
       StartAnimationLoop();
@@ -71,6 +64,13 @@ function StartAnimation(config) {
 
     PauseAnimationLoop();
     PauseAudio();
+  }
+
+  function SetTextColor(textColor) {
+    if (textColor) {
+      let crawl = document.getElementById("crawl");
+      crawl.style.color = textColor;
+    }
   }
 
   (function ActivateControls() {
@@ -87,7 +87,7 @@ function StartAnimation(config) {
         clearInterval(fastBackwardIntervalId);
         fastBackwardIntervalId = null;
         incrementValue = defaultIncrementValue;
-        ClearUgabuga();
+        ClearPlaybackRate();
       }
     });
 
@@ -104,7 +104,7 @@ function StartAnimation(config) {
         clearInterval(fastForwardIntervalId);
         fastForwardIntervalId = null;
         incrementValue = defaultIncrementValue;
-        ClearUgabuga();
+        ClearPlaybackRate();
       }
     });
   })();
@@ -120,7 +120,7 @@ function StartAnimation(config) {
   function StartAnimationLoop() {
     crawlAnimationInterval = setInterval(function () {
       translateYValue += incrementValue;
-      document.getElementById("crawl").style = `transform: rotateX(25deg) translateY(${translateYValue}px) translateZ(${translateZValue}px);`;
+      document.getElementById("crawl").style.transform = `rotateX(25deg) translateY(${translateYValue}px) translateZ(${translateZValue}px)`;
     }, updateTime);
   }
 
@@ -154,13 +154,15 @@ function StartAnimation(config) {
     }
   }
 
-  function ClearUgabuga() {
+  function ClearPlaybackRate() {
     var audio = document.getElementById("audioPlayer");
     audio.playbackRate = 1;
   }
 }
 
 function SetButton(button, config, isPlayButton = false) {
+  let shouldHaveBackground = true;
+
   switch (isPlayButton ? config.playButtonShape : config.pauseButtonShape) {
     case "circle":
       button.style.borderRadius = "50%";
@@ -168,12 +170,18 @@ function SetButton(button, config, isPlayButton = false) {
     case "square":
       button.style.borderRadius = "0";
       break;
+    case "none":
+      button.style.backgroundColor = "rgba(0, 0, 0, 0)";
+      shouldHaveBackground = false;
+      break;
     default:
       button.style.borderRadius = "50%";
       break;
   }
 
-  button.style.backgroundColor = isPlayButton ? config.playButtonColor : config.pauseButtonColor;
+  if (shouldHaveBackground) {
+    button.style.backgroundColor = isPlayButton ? config.playButtonColor : config.pauseButtonColor;
+  }
 }
 
 function GenerateConfig(_time, _audio_format) {
@@ -185,9 +193,9 @@ function GenerateConfig(_time, _audio_format) {
     shouldPlayReverse: false,
     playButtonShape: "circle",
     pauseButtonShape: "circle",
-    playButtonColor: "feda4a",
-    pauseButtonColor: "feda4a",
-    textColor: "feda4a",
+    playButtonColor: "#feda4a",
+    pauseButtonColor: "#feda4a",
+    textColor: "#feda4a",
   };
 
   var configJSON = JSON.stringify(config, null, 2);

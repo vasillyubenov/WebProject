@@ -9,7 +9,8 @@ The platform also includes a visual configuration editor, allowing the users to 
 - A modern web browser
 - Have to install the following php packages:
 - 1. php-mbstring
-- 1. php-dom
+- 2. php-dom
+- 3. php-mysqli
 
 ## Project Structure
 The project is structured as follows:
