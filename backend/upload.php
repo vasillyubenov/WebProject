@@ -7,14 +7,17 @@ $time = date("Y-m-d_H:i:s");
 $target_file = "";
 
 $html = $_FILES['htmlFile'];
+
 if (isset($_FILES['htmlFile'])) {
     $file_form_name = "htmlFile";
     upload_file($file_form_name, $target_dir, $time, "html");
 }
 
+// Default audio format is mpeg
 $audio = $_FILES['audioFile'];
-$audio_format = "";
-if (isset($audio)) {
+$audio_format = "mpeg";
+
+if (is_file_sent("audioFile")) {
     $file_form_name = "audioFile";
     $audio_format = explode("/", $audio["type"])[1];
     upload_file($file_form_name, $target_dir, $time, $audio_format);
@@ -30,18 +33,17 @@ $pauseButtonColor = "feda4a";
 $textColor = "feda4a";
 
 $config = $_FILES["configFile"];
+
 if ($config["size"] > 0) {
     $file_form_name = "audioFile";
-    $audio_format = explode("/", $audio["type"])[1];
-
     $jsonString = file_get_contents($config["tmp_name"]);
     $jsonObject = json_decode($jsonString);
-    
-    if (!isset($_FILES['htmlFile'])) {
+
+    if (!is_file_sent('htmlFile')) {
         $time = $jsonObject->time;
     }
 
-    if (!isset($_FILES['audioFile'])) {
+    if (is_file_sent('audioFile')) {
         $audio_format = $jsonObject->audio_format;
     }
 
@@ -99,9 +101,22 @@ $stmt->close();
 header("Location: visualize.php?presentationId=" . $lastInsertId);
 exit();
 
+function is_file_sent($form_field) {
+    // Error 4 means nothing was uploaded in the corresponding field
+    return isset($_FILES[$form_field]) && !isset($_FILES[$form_field]['error']) && $_FILES[$form_field]['error'] != 4;
+}
+
 function upload_file($file_form_name, $target_dir, $curent_datetime, $format)
 {
     $target_file = $target_dir . basename($curent_datetime . $file_form_name);
+
+    if (!file_exists($target_file)) {
+        // Load default file
+        $file_form_name = 
+        $audio_format = "mpeg";
+        return;
+    }
+
     if (move_uploaded_file($_FILES[$file_form_name]["tmp_name"], $target_file . "." . $format)) {
         echo "The file " . basename($_FILES[$file_form_name]["name"]) . " has been uploaded.\n";
     } else {

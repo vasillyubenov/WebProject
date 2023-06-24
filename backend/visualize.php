@@ -22,6 +22,16 @@ $config = new Config($time, $text_step, $playback_step, $shouldPlayReverse, $pla
 $target_dir = "uploads/";
 $audio_file = $target_dir . $time . basename("audioFile") . "." . $audio_format;
 $html_file = $target_dir . $time . basename("htmlFile") . ".html";
+
+if (!file_exists($audio_file)) {
+  // In case something corrupted the json file
+  $audio_file = $target_dir . "defaultAudio.mp3";
+}
+
+if (!file_exists($html_file)) {
+  // In case something corrupted the json file
+  $html_file = $target_dir . "defaultHtmlFile.html";
+}
 ?>
 
 <html lang="en">
