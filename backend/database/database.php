@@ -1,8 +1,10 @@
 <?php
-    $host = 'localhost';
-    $dbUsername = 'root';
-    $dbPassword = 'root';
-    $dbName = 'web';
+    require_once __DIR__."/../../bootstrap.php";
+    
+    $host = $_ENV['DATABASE_HOST'];
+    $dbUsername = $_ENV['DATABASE_USER'];
+    $dbPassword = $_ENV['DATABASE_PASSWORD'];
+    $dbName = $_ENV['DATABASE_NAME'];
 
     $conn = mysqli_connect($host,$dbUsername,$dbPassword,$dbName);
     

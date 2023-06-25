@@ -1,6 +1,7 @@
 {
     "require": {
       "soundasleep/html2text": "~1.1",
-        "html2text/html2text": "^4.3"
+        "html2text/html2text": "^4.3",
+        "vlucas/phpdotenv": "^5.5"
     }
   }
