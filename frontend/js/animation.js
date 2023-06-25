@@ -107,6 +107,28 @@ function StartAnimation(config) {
         ClearPlaybackRate();
       }
     });
+
+    document.addEventListener("keydown", function(event) {
+      var audio = document.getElementById("audioPlayer");
+      
+      // Increase volume on up key press
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        audio.volume += 0.1; // Increasing volume by 10%
+        if (audio.volume > 1) {
+          audio.volume = 1;
+        }
+      }
+      
+      // Decrease volume on down key press
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        audio.volume -= 0.1; // Decreasing volume by 10%
+        if (audio.volume < 0) {
+          audio.volume = 0;
+        }
+      }
+    });
   })();
 
   function FastForward() {
